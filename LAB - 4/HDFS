@@ -1,0 +1,176 @@
+duser@bmsce-Precision-T1700:~$ hadoop
+Usage: hadoop [--config confdir] COMMAND
+       where COMMAND is one of:
+  fs                   run a generic filesystem user client
+  version              print the version
+  jar <jar>            run a jar file
+  checknative [-a|-h]  check native hadoop and compression libraries availability
+  distcp <srcurl> <desturl> copy file or directories recursively
+  archive -archiveName NAME -p <parent path> <src>* <dest> create a hadoop archive
+  classpath            prints the class path needed to get the
+  credential           interact with credential providers
+                       Hadoop jar and the required libraries
+  daemonlog            get/set the log level for each daemon
+  trace                view and modify Hadoop tracing settings
+ or
+  CLASSNAME            run the class named CLASSNAME
+
+Most commands print help when invoked w/o parameters.
+hduser@bmsce-Precision-T1700:~$ sudo su hduser
+[sudo] password for hduser: 
+hduser@bmsce-Precision-T1700:~$ start-all.sh
+This script is Deprecated. Instead use start-dfs.sh and start-yarn.sh
+Starting namenodes on [localhost]
+hduser@localhost's password: 
+localhost: starting namenode, logging to /usr/local/hadoop/logs/hadoop-hduser-namenode-bmsce-Precision-T1700.out
+hduser@localhost's password: 
+localhost: starting datanode, logging to /usr/local/hadoop/logs/hadoop-hduser-datanode-bmsce-Precision-T1700.out
+Starting secondary namenodes [0.0.0.0]
+hduser@0.0.0.0's password: 
+0.0.0.0: starting secondarynamenode, logging to /usr/local/hadoop/logs/hadoop-hduser-secondarynamenode-bmsce-Precision-T1700.out
+starting yarn daemons
+starting resourcemanager, logging to /usr/local/hadoop/logs/yarn-hduser-resourcemanager-bmsce-Precision-T1700.out
+hduser@localhost's password: 
+localhost: starting nodemanager, logging to /usr/local/hadoop/logs/yarn-hduser-nodemanager-bmsce-Precision-T1700.out
+hduser@bmsce-Precision-T1700:~$ jps
+5956 Jps
+5127 DataNode
+4952 NameNode
+5834 NodeManager
+5500 ResourceManager
+5341 SecondaryNameNode
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -mkdir/ddd
+-mkdir/ddd: Unknown command
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -mkdir /ddd
+hduser@bmsce-Precision-T1700:~$ ls
+ 1BM18CS035      Downloads             metastore_db                                   Public
+ command.class   examples.desktop      Music                                          R
+ command.java    hadoop-2.6.0.tar.gz  'Packet Tracer 7.2.1 for Linux 64 bit.tar.gz'   ron
+ derby.log       hive                  Pictures                                       Templates
+ Desktop         inheritance.java      pig_1564816082257.log                          toinstalledlist
+ Documents       lab2.txt              pt                                             Videos
+ downloads       lab3.txt              PT72Installer                                  xyz.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -ls/
+-ls/: Unknown command
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -ls
+ls: `.': No such file or directory
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -ls /ddd
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -ls /
+Found 7 items
+drwxr-xr-x   - hduser supergroup          0 2022-06-01 15:19 /FFF
+drwxr-xr-x   - hduser supergroup          0 2022-06-03 11:54 /ddd
+drwxr-xr-x   - hduser supergroup          0 2022-05-31 09:45 /ff
+drwxr-xr-x   - hduser supergroup          0 2022-06-01 15:22 /j
+drwxr-xr-x   - hduser supergroup          0 2022-05-31 09:57 /ss
+drwxrwxr-x   - hduser supergroup          0 2019-08-01 16:19 /tmp
+drwxr-xr-x   - hduser supergroup          0 2019-08-01 16:03 /user
+hduser@bmsce-Precision-T1700:~$ vi file1.txt /ddd
+2 files to edit
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -ls /ddd
+hduser@bmsce-Precision-T1700:~$ cat -ls /ddd
+cat: invalid option -- 'l'
+Try 'cat --help' for more information.
+hduser@bmsce-Precision-T1700:~$ -cat /ddd
+
+Command '-cat' not found, but there are 17 similar ones.
+
+hduser@bmsce-Precision-T1700:~$ ls
+ 1BM18CS035      examples.desktop      Music                                          ron
+ command.class   file1.txt            'Packet Tracer 7.2.1 for Linux 64 bit.tar.gz'   Templates
+ command.java    hadoop-2.6.0.tar.gz   Pictures                                       toinstalledlist
+ derby.log       hive                  pig_1564816082257.log                          Videos
+ Desktop         inheritance.java      pt                                             xyz.txt
+ Documents       lab2.txt              PT72Installer
+ downloads       lab3.txt              Public
+ Downloads       metastore_db          R
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -put file1.txt /ddd/newfile.txt
+hduser@bmsce-Precision-T1700:~$ cat -ls /ddd
+cat: invalid option -- 'l'
+Try 'cat --help' for more information.
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -ls /ddd
+Found 1 items
+-rw-r--r--   1 hduser supergroup         20 2022-06-03 12:08 /ddd/newfile.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -cat /ddd/newfile.txt
+Awwwww:
+B
+B
+B
+B
+
+C
+
+hduser@bmsce-Precision-T1700:~$ vi file23.txt 
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -put file23.txt /ddd/adfile.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -cat /ddd/adfile.txt
+hi hello 
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -ls /ddd
+Found 2 items
+-rw-r--r--   1 hduser supergroup         10 2022-06-03 12:16 /ddd/adfile.txt
+-rw-r--r--   1 hduser supergroup         20 2022-06-03 12:08 /ddd/newfile.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -copyToLocal /ddd/adfile.txt /home/hduser/Desktop
+hduser@bmsce-Precision-T1700:~$ ls
+ 1BM18CS035      examples.desktop      metastore_db                                   R
+ command.class   file1.txt             Music                                          ron
+ command.java    file23.txt           'Packet Tracer 7.2.1 for Linux 64 bit.tar.gz'   Templates
+ derby.log       hadoop-2.6.0.tar.gz   Pictures                                       toinstalledlist
+ Desktop         hive                  pig_1564816082257.log                          Videos
+ Documents       inheritance.java      pt                                             xyz.txt
+ downloads       lab2.txt              PT72Installer
+ Downloads       lab3.txt              Public
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -ls
+ls: `.': No such file or directory
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -ls /
+Found 7 items
+drwxr-xr-x   - hduser supergroup          0 2022-06-01 15:19 /FFF
+drwxr-xr-x   - hduser supergroup          0 2022-06-03 12:16 /ddd
+drwxr-xr-x   - hduser supergroup          0 2022-05-31 09:45 /ff
+drwxr-xr-x   - hduser supergroup          0 2022-06-01 15:22 /j
+drwxr-xr-x   - hduser supergroup          0 2022-05-31 09:57 /ss
+drwxrwxr-x   - hduser supergroup          0 2019-08-01 16:19 /tmp
+drwxr-xr-x   - hduser supergroup          0 2019-08-01 16:03 /user
+hduser@bmsce-Precision-T1700:~$ pwd
+/home/hduser
+hduser@bmsce-Precision-T1700:~$ cd desktop
+bash: cd: desktop: No such file or directory
+hduser@bmsce-Precision-T1700:~$ pwd
+/home/hduser
+hduser@bmsce-Precision-T1700:~$ ls 
+ 1BM18CS035      examples.desktop      metastore_db                                   R
+ command.class   file1.txt             Music                                          ron
+ command.java    file23.txt           'Packet Tracer 7.2.1 for Linux 64 bit.tar.gz'   Templates
+ derby.log       hadoop-2.6.0.tar.gz   Pictures                                       toinstalledlist
+ Desktop         hive                  pig_1564816082257.log                          Videos
+ Documents       inheritance.java      pt                                             xyz.txt
+ downloads       lab2.txt              PT72Installer
+ Downloads       lab3.txt              Public
+hduser@bmsce-Precision-T1700:~$ cd D
+Desktop/   Documents/ Downloads/ 
+hduser@bmsce-Precision-T1700:~$ cd Desktop/
+hduser@bmsce-Precision-T1700:~/Desktop$ ls
+adfile.txt  lab3.txt   Ubuntu-Softwares-Installation-files-31-07-2019  xyz.txt
+copy.txt    merge.txt  Welcome.txt
+hduser@bmsce-Precision-T1700:~/Desktop$ hdfs dfs -mkdir /sss
+hduser@bmsce-Precision-T1700:~/Desktop$ exit
+exit
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -mkdir /shyam
+hduser@bmsce-Precision-T1700:~$ vi alterfile.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -put /alterfile.txt/shyam/ssfile.txt
+put: `.': No such file or directory
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -put alterfile.txt/shyam/ssfile.txt
+put: `.': No such file or directory
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -put alterfile.txt /shyam/ssfile.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -ls /shyam
+Found 1 items
+-rw-r--r--   1 hduser supergroup         12 2022-06-03 12:42 /shyam/ssfile.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -ls /ddd
+Found 2 items
+-rw-r--r--   1 hduser supergroup         10 2022-06-03 12:16 /ddd/adfile.txt
+-rw-r--r--   1 hduser supergroup         20 2022-06-03 12:08 /ddd/newfile.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -cp /ddd/newfile.txt /shyam/newerfile.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -ls /shyam
+Found 2 items
+-rw-r--r--   1 hduser supergroup         20 2022-06-03 12:45 /shyam/newerfile.txt
+-rw-r--r--   1 hduser supergroup         12 2022-06-03 12:42 /shyam/ssfile.txt
+hduser@bmsce-Precision-T1700:~$ ^C
+hduser@bmsce-Precision-T1700:~$ 
+
